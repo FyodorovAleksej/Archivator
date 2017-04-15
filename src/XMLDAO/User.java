@@ -1,5 +1,7 @@
 package XMLDAO;
 
+import java.io.Serializable;
+
 import static XMLDAO.XMLConstants.XMLPARSERCONST.XMLBEGIN;
 import static XMLDAO.XMLConstants.XMLPARSERCONST.XMLEND;
 import static XMLDAO.XMLConstants.XMLPARSERCONST.XMLNONE;
@@ -10,7 +12,7 @@ import static XMLDAO.Parsers.XMLDOMParser.XMLEnd;
 /**
  * Created by Alexey on 03.04.2017.
  */
-public class User {
+public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String fatherName;

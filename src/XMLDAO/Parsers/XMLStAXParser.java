@@ -56,10 +56,8 @@ public class XMLStAXParser implements Parserable {
         public void startParsing(String path) {
             try {
                 XMLInputFactory factory = XMLInputFactory.newInstance();
-                XMLEventReader eventReader =
-                        factory.createXMLEventReader(
-                                new FileReader(path));
 
+                XMLEventReader eventReader = factory.createXMLEventReader(new FileReader(path));
                 while (eventReader.hasNext()) {
                     XMLEvent event = eventReader.nextEvent();
                     switch (event.getEventType()) {
@@ -144,7 +142,6 @@ public class XMLStAXParser implements Parserable {
                 e.printStackTrace();
             }
         }
-
 
         protected User getUser(int index) {
             return users.get(index);
