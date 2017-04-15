@@ -21,8 +21,9 @@ public class XMLEditor {
     private String path;
     private static final String prefix = "temp";
 
-    public XMLEditor(String path) {
+    public XMLEditor(String path, Parserable parser) {
         this.path = path;
+        this.parser = parser;
     }
 
     public void add(User user, int index) {
@@ -145,4 +146,7 @@ public class XMLEditor {
         this.path = path;
     }
 
+    public void setParser(Parserable parser) {
+        this.parser = parser;
+    }
 }
