@@ -17,6 +17,9 @@ public class XMLSAXParser implements Parserable{
     public User[] parseFromXML(String path) {
         try {
             File inputFile = new File(path);
+            if (!inputFile.exists()) {
+                return null;
+            }
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             UserHandler userhandler = new UserHandler();
@@ -32,6 +35,9 @@ public class XMLSAXParser implements Parserable{
     public User parseFromXML(String path, int index) {
         try {
             File inputFile = new File(path);
+            if (!inputFile.exists()) {
+                return null;
+            }
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             UserHandler userhandler = new UserHandler();

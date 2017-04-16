@@ -14,7 +14,7 @@ import static java.lang.Thread.sleep;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class XMLEditorTest {
 
-    XMLEditor editor = new XMLEditor("test.xml",new XMLSAXParser());
+    XMLEditor editor = new XMLEditor("test.xml",new XMLStAXParser());
 
     @org.junit.Before
     public void setUp() throws Exception {
