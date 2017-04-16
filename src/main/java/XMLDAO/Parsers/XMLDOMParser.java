@@ -67,6 +67,9 @@ public class XMLDOMParser implements Parserable{
             Document doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("user");
+            if (index < 0 || index >= nList.getLength()){
+                return null;
+            }
             Node nNode = nList.item(index);
             NodeList fioList = doc.getElementsByTagName("FIO");
             Node fioNode = fioList.item(index);

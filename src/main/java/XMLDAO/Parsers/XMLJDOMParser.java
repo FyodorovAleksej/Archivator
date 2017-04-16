@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import XMLDAO.Parsers.Parserable;
 import XMLDAO.User;
-import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -18,6 +16,9 @@ public class XMLJDOMParser implements Parserable {
     public User[] parseFromXML(String path) {
         try {
             File inputFile = new File(path);
+            if (!inputFile.exists()){
+                return null;
+            }
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element classElement = document.getRootElement();
@@ -47,11 +48,16 @@ public class XMLJDOMParser implements Parserable {
             int workExperience = 0;
 
             File inputFile = new File(path);
+            if (!inputFile.exists()){
+                return null;
+            }
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(inputFile);
             Element classElement = document.getRootElement();
             List<Element> userList = classElement.getChildren();
-
+            if (index < 0 || index >= userList.size()){
+                return null;
+            }
             Element user = userList.get(index);
             Element FIO =  user.getChild("FIO");
 

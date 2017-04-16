@@ -1,3 +1,4 @@
+import XMLDAO.Compress.Compressor;
 import XMLDAO.Parsers.XMLDOMParser;
 import XMLDAO.Parsers.XMLJDOMParser;
 import XMLDAO.Parsers.XMLSAXParser;
@@ -72,5 +73,17 @@ public class XMLEditorTest {
     @org.junit.Test
     public void validate() throws Exception {
         assert (editor.validate(schema));
+    }
+
+    @org.junit.Test
+    public void compress() throws Exception {
+        Compressor compressor = new Compressor();
+        compressor.compress(path,"test.zip",2);
+    }
+
+    @org.junit.Test
+    public void decompress() throws Exception {
+        Compressor compressor = new Compressor();
+        compressor.decompress("test.zip",path);
     }
 }
