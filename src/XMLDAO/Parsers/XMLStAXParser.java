@@ -2,6 +2,7 @@ package XMLDAO.Parsers;
 
 import XMLDAO.User;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
@@ -21,6 +22,10 @@ public class XMLStAXParser implements Parserable {
 
     @Override
     public User[] parseFromXML(String path) {
+        File inputFile = new File(path);
+        if (!inputFile.exists()) {
+            return null;
+        }
         Handler handler = new Handler();
         handler.startParsing(path);
         return handler.getUsers();
@@ -28,6 +33,10 @@ public class XMLStAXParser implements Parserable {
 
     @Override
     public User parseFromXML(String path, int index) {
+        File inputFile = new File(path);
+        if (!inputFile.exists()) {
+            return null;
+        }
         Handler handler = new Handler();
         handler.startParsing(path);
         return handler.getUser(index);
@@ -53,6 +62,10 @@ public class XMLStAXParser implements Parserable {
         boolean bWorkplace = false;
         boolean bExperience = false;
 
+        boolean bFIO = false;
+        boolean bContact = false;
+        boolean bWork = false;
+
         public void startParsing(String path) {
             try {
                 XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -65,17 +78,22 @@ public class XMLStAXParser implements Parserable {
                             StartElement startElement = event.asStartElement();
                             String qName = startElement.getName().getLocalPart();
                             if (qName.equalsIgnoreCase("user")) {
-                                Iterator<Attribute> attributes = startElement.getAttributes();
+                            } else if (qName.equalsIgnoreCase("FIO")) {
+                                bFIO = true;
                             } else if (qName.equalsIgnoreCase("firstname")) {
                                 bFirstName = true;
                             } else if (qName.equalsIgnoreCase("lastname")) {
                                 bLastName = true;
                             } else if (qName.equalsIgnoreCase("fathername")) {
                                 bFatherName = true;
+                            } else if (qName.equalsIgnoreCase("contact")) {
+                                bContact = true;
                             } else if (qName.equalsIgnoreCase("telephonenumber")) {
                                 bTelephoneNumber = true;
                             } else if (qName.equalsIgnoreCase("mail")) {
                                 bEmail = true;
+                            } else if (qName.equalsIgnoreCase("work")) {
+                                bWork = true;
                             } else if (qName.equalsIgnoreCase("workplace")) {
                                 bWorkplace = true;
                             } else if (qName.equalsIgnoreCase("experience")) {
@@ -124,6 +142,10 @@ public class XMLStAXParser implements Parserable {
                                 bEmail = false;
                                 bWorkplace = false;
                                 bExperience = false;
+
+                                bFIO = false;
+                                bContact = false;
+                                bWork = false;
 
                                 FirstName = null;
                                 LastName = null;

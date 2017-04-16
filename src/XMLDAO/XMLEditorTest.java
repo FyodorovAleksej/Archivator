@@ -1,5 +1,6 @@
 package XMLDAO;
 
+import XMLDAO.Parsers.XMLDOMParser;
 import XMLDAO.Parsers.XMLSAXParser;
 import XMLDAO.Parsers.XMLStAXParser;
 import org.junit.FixMethodOrder;
