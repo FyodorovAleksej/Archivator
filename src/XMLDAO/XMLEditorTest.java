@@ -1,5 +1,6 @@
 package XMLDAO;
 
+import XMLDAO.Parsers.XMLDOMParser;
 import XMLDAO.Parsers.XMLSAXParser;
 import XMLDAO.Parsers.XMLStAXParser;
 import org.junit.FixMethodOrder;
@@ -13,7 +14,7 @@ import static java.lang.Thread.sleep;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class XMLEditorTest {
 
-    XMLEditor editor = new XMLEditor("test.xml",new XMLStAXParser());
+    XMLEditor editor = new XMLEditor("test.xml",new XMLSAXParser());
 
     @org.junit.Before
     public void setUp() throws Exception {

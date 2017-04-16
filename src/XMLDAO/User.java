@@ -87,13 +87,19 @@ public class User implements Serializable {
             result += XMLBegin();
         }
         result += ("  <user>\n");
+        result += ("    <FIO>\n");
         result += ("      <firstname>" + this.firstName + "</firstname>\n");
         result += ("      <lastname>" + this.lastName + "</lastname>\n");
         result += ("      <fathername>" + this.fatherName + "</fathername>\n");
+        result += ("    </FIO>\n");
+        result += ("    <contact>\n");
         result += ("      <telephonenumber>" + this.telephoneNumber + "</telephonenumber>\n");
         result += ("      <mail>" + this.mail + "</mail>\n");
+        result += ("    </contact>\n");
+        result += ("    <work>\n");
         result += ("      <workplace>" + this.workPlace + "</workplace>\n");
         result += ("      <experience>" + this.workExperience + "</experience>\n");
+        result += ("    </work>\n");
         result += ("  </user>\n");
         if ((mask & XMLEND) == XMLEND){
             result += XMLEnd();

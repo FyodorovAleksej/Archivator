@@ -53,6 +53,14 @@ public class XMLDOMParser implements Parserable{
     @Nullable
     public User parseFromXML(String path, int index) {
         try {
+            String firstName = null;
+            String lastName = null;
+            String fatherName = null;
+            String telephoneNumber = null;
+            String mail = null;
+            String workPlace = null;
+            int workExperience = 0;
+
             File inputFile = new File(path);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -60,17 +68,26 @@ public class XMLDOMParser implements Parserable{
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("user");
             Node nNode = nList.item(index);
-            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                String firstName = getXMLArgument(nNode, "firstname", XMLCONST.XMLNAME);
-                String lastName = getXMLArgument(nNode, "lastname", XMLCONST.XMLNAME);
-                String fatherName = getXMLArgument(nNode, "fathername", XMLCONST.XMLNAME);
-                String telephoneNumber = getXMLArgument(nNode, "telephonenumber", XMLCONST.XMLPHONENUMBER);
-                String mail = getXMLArgument(nNode, "mail", XMLCONST.XMLMAIl);
-                String workPlace = getXMLArgument(nNode, "workplace", XMLCONST.XMLNONE);
-                int workExperience = Integer.valueOf(getXMLArgument(nNode, "experience", XMLCONST.XMLEXPERIENCE));
-                return new User(firstName, lastName, fatherName, telephoneNumber, mail, workPlace, workExperience);
+            NodeList fioList = doc.getElementsByTagName("FIO");
+            Node fioNode = fioList.item(index);
+            if (fioNode.getNodeType() == Node.ELEMENT_NODE) {
+                firstName = getXMLArgument(fioNode, "firstname", XMLCONST.XMLNAME);
+                lastName = getXMLArgument(fioNode, "lastname", XMLCONST.XMLNAME);
+                fatherName = getXMLArgument(fioNode, "fathername", XMLCONST.XMLNAME);
             }
-            return null;
+            NodeList contactList = doc.getElementsByTagName("contact");
+            Node contactNode = contactList.item(index);
+            if (contactNode.getNodeType() == Node.ELEMENT_NODE) {
+                telephoneNumber = getXMLArgument(contactNode, "telephonenumber", XMLCONST.XMLPHONENUMBER);
+                mail = getXMLArgument(contactNode, "mail", XMLCONST.XMLMAIl);
+            }
+            NodeList workList = doc.getElementsByTagName("work");
+            Node workNode = workList.item(index);
+            if (workNode.getNodeType() == Node.ELEMENT_NODE) {
+                workPlace = getXMLArgument(workNode, "workplace", XMLCONST.XMLNONE);
+                workExperience = Integer.valueOf(getXMLArgument(nNode, "experience", XMLCONST.XMLEXPERIENCE));
+            }
+            return new User(firstName, lastName, fatherName, telephoneNumber, mail, workPlace, workExperience);
         }catch (Exception e){
             e.printStackTrace();
             return null;

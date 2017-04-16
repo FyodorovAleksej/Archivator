@@ -64,11 +64,18 @@ class UserHandler extends DefaultHandler {
     boolean bWorkplace = false;
     boolean bExperience = false;
 
+    boolean bFIO = false;
+    boolean bContact = false;
+    boolean bWork = false;
+
     int count = 0;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        System.out.println("start checking - " + qName);
         if (qName.equalsIgnoreCase("user")) {
+        } else if (qName.equalsIgnoreCase("FIO")) {
+            bFIO = true;
         } else if (qName.equalsIgnoreCase("firstname")) {
             bFirstName = true;
             count++;
@@ -78,12 +85,16 @@ class UserHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("fathername")) {
             bFatherName = true;
             count++;
+        } else if (qName.equalsIgnoreCase("contact")) {
+            bContact = true;
         } else if (qName.equalsIgnoreCase("telephonenumber")) {
             bTelephoneNumber = true;
             count++;
         } else if (qName.equalsIgnoreCase("mail")) {
             bEmail = true;
             count++;
+        } else if (qName.equalsIgnoreCase("work")) {
+            bWork = true;
         } else if (qName.equalsIgnoreCase("workplace")) {
             bWorkplace = true;
             count++;
@@ -103,6 +114,7 @@ class UserHandler extends DefaultHandler {
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
 
+        System.out.println("checking - " + new String(ch,start,length));
         if (bFirstName) {
             FirstName = new String(ch, start, length);
             bFirstName = false;
@@ -124,6 +136,12 @@ class UserHandler extends DefaultHandler {
         } else if (bExperience) {
             Experience = new String(ch, start, length);
             bExperience = false;
+        } else if (bFIO) {
+            bFIO = false;
+        } else if (bContact) {
+            bContact = false;
+        } else if (bWork) {
+            bWork = false;
         }
         if (count == 7) {
             users.addLast(new User(FirstName, LastName, FatherName, TelephoneNumber, Email, Workplace, Integer.valueOf(Experience)));
@@ -134,6 +152,10 @@ class UserHandler extends DefaultHandler {
             bEmail = false;
             bWorkplace = false;
             bExperience = false;
+
+            bFIO = false;
+            bContact = false;
+            bWork = false;
 
             FirstName = null;
             LastName = null;
