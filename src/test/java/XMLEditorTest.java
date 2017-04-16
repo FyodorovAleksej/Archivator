@@ -1,3 +1,6 @@
+import XMLDAO.Parsers.XMLDOMParser;
+import XMLDAO.Parsers.XMLJDOMParser;
+import XMLDAO.Parsers.XMLSAXParser;
 import XMLDAO.Parsers.XMLStAXParser;
 import XMLDAO.User;
 import XMLDAO.XMLEditor;
@@ -15,7 +18,8 @@ public class XMLEditorTest {
 
     final String schema = "validationSchema.xsd";
     final String path = "test.xml";
-    XMLEditor editor = new XMLEditor("test.xml",new XMLStAXParser());
+
+    XMLEditor editor = new XMLEditor("test.xml",new XMLJDOMParser());
 
     @org.junit.Before
     public void setUp() throws Exception {
@@ -23,28 +27,27 @@ public class XMLEditorTest {
 
     @org.junit.After
     public void tearDown() throws Exception {
-
     }
 
     @org.junit.Test
     public void add() throws Exception {
         editor.add(new User("ADDRR","Telyatnik","Aleksandrovich","+375298808076","Telyatina@gmail.com","BSUIR",5),0);
         assert (editor.get(0).getFirstName().equals("ADDRR"));
-        System.out.println(editor);
+        //System.out.println(editor);
     }
 
     @org.junit.Test
     public void addInBegin() throws Exception {
         editor.addInBegin(new User("BEGIN","Telyatnik","Aleksandrovich","+375298808076","Telyatnik.loh@gmail.com","BSUIR",1));
         assert (editor.get(0).getFirstName().equals("BEGIN"));
-        System.out.println(editor);
+        //System.out.println(editor);
     }
 
     @org.junit.Test
     public void addInEnd() throws Exception {
         editor.addInEnd(new User("END","Telyatnik","Aleksandrovich","+375298808076","Telyatnik.loh@gmail.com","BSUIR",1));
         assert (editor.get(editor.length() - 1).getFirstName().equals("END"));
-        System.out.println(editor);
+        //System.out.println(editor);
     }
 
     @org.junit.Test
