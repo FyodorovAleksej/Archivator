@@ -13,6 +13,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLSAXParser implements Parserable{
 
+    /**
+     * Parse XML file for getting array of users, saving in file
+     * @param path the path of xml file for parse
+     * @return the array of users in xml file (path)
+     */
     public User[] parseFromXML(String path) {
         try {
             File inputFile = new File(path);
@@ -30,6 +35,12 @@ public class XMLSAXParser implements Parserable{
         return null;
     }
 
+    /**
+     * Parse XML file for getting user with @param index from this xml file
+     * @param path the path of xml file for parsing
+     * @param index the index of getting user
+     * @return the user with @param index
+     */
     public User parseFromXML(String path, int index) {
         try {
             File inputFile = new File(path);

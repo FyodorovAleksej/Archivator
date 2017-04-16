@@ -8,9 +8,18 @@ import java.io.FileNotFoundException;
 
 /**
  * Created by Alexey on 16.04.2017.
+ * The class for checking validation of XML file with XML schema
  */
 public class XMLSchemaValidator {
 
+    /**
+     * checking validation of XML file with XML schema
+     * @param pathXml the path of the checking XML file
+     * @param pathXsd the path of the XML schema file
+     * @return true - if this XML file is validate with this XML schema
+     *        false - if this XML file isn't validate with this XML schema
+     * @throws FileNotFoundException if one of this files wasn't founded
+     */
     public static boolean checkXMLforXSD(String pathXml, String pathXsd) throws FileNotFoundException {
 
         File xml = new File(pathXml);

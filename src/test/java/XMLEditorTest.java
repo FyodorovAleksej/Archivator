@@ -19,8 +19,9 @@ public class XMLEditorTest {
 
     final String schema = "validationSchema.xsd";
     final String path = "test.xml";
+    final String archive = "test.zip";
 
-    XMLEditor editor = new XMLEditor("test.xml",new XMLJDOMParser());
+    XMLEditor editor = new XMLEditor(path,new XMLDOMParser(), archive);
 
     @org.junit.Before
     public void setUp() throws Exception {
@@ -77,13 +78,11 @@ public class XMLEditorTest {
 
     @org.junit.Test
     public void compress() throws Exception {
-        Compressor compressor = new Compressor();
-        compressor.compress(path,"test.zip",2);
+        editor.compress(6);
     }
 
     @org.junit.Test
     public void decompress() throws Exception {
-        Compressor compressor = new Compressor();
-        compressor.decompress("test.zip",path);
+        editor.uncompress();
     }
 }
