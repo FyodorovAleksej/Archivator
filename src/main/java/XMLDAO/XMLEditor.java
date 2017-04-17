@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static XMLDAO.XMLConstants.XMLPARSERCONST.XMLBEGIN;
 import static XMLDAO.XMLConstants.XMLPARSERCONST.XMLEND;
@@ -15,7 +16,7 @@ import static XMLDAO.XMLConstants.XMLPARSERCONST.XMLNONE;
 
 /**
  * Created by Alexey on 15.04.2017.
- * The class for doing logic operations with XML file and User
+ * The class for doing logic operations with XML file and Person
  */
 public class XMLEditor {
 
@@ -39,33 +40,33 @@ public class XMLEditor {
     }
 
     /**
-     * adding this User into this position in XML file
-     * @param user the User, that was insert into XML file
-     * @param index the index of position to insert this User
+     * adding this Person into this position in XML file
+     * @param person the Person, that was insert into XML file
+     * @param index the index of position to insert this Person
      */
-    public void add(User user, int index) {
-        User users[] = parser.parseFromXML(path);
-        if (users != null)
+    public void add(Person person, int index) {
+        Person people[] = parser.parseFromXML(path);
+        if (people != null)
         {
-            if (index < 0 || index > users.length){
+            if (index < 0 || index > people.length){
                 return;
             }
         }
         try {
             FileWriter fileWriter = new FileWriter(path, false);
-            fileWriter.write(User.parseToXML(null, XMLBEGIN));
-            if (users != null && index >= 0 && index <= users.length) {
+            fileWriter.write(Person.parseToXML(null, XMLBEGIN));
+            if (people != null && index >= 0 && index <= people.length) {
                 for (int i = 0; i < index; i++) {
-                    fileWriter.append(users[i].parseToXML(XMLNONE));
+                    fileWriter.append(people[i].parseToXML(XMLNONE));
                 }
             }
-            fileWriter.append(user.parseToXML(XMLNONE));
-            if (users != null && index >= 0 && index < users.length) {
-                for (int i = index; i < users.length; i++) {
-                    fileWriter.append(users[i].parseToXML(XMLNONE));
+            fileWriter.append(person.parseToXML(XMLNONE));
+            if (people != null && index >= 0 && index < people.length) {
+                for (int i = index; i < people.length; i++) {
+                    fileWriter.append(people[i].parseToXML(XMLNONE));
                 }
             }
-            fileWriter.append(User.parseToXML(null, XMLEND));
+            fileWriter.append(Person.parseToXML(null, XMLEND));
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
@@ -74,49 +75,49 @@ public class XMLEditor {
     }
 
     /**
-     * adding this User in begin of the XML file
-     * @param user the User, that was been adding in the Begin of the XML file
+     * adding this Person in begin of the XML file
+     * @param person the Person, that was been adding in the Begin of the XML file
      */
-    public void addInBegin(User user) {
-        this.add(user, 0);
+    public void addInBegin(Person person) {
+        this.add(person, 0);
     }
 
     /**
-     * adding this User in the end of the XML file
-     * @param user the User, that was been adding in the end of the XML file
+     * adding this Person in the end of the XML file
+     * @param person the Person, that was been adding in the end of the XML file
      */
-    public void addInEnd(User user){
+    public void addInEnd(Person person){
         if (parser.parseFromXML(path) != null){
-            this.add(user, parser.parseFromXML(path).length);
+            this.add(person, parser.parseFromXML(path).length);
         }
         else
         {
-            this.add(user,0);
+            this.add(person,0);
         }
     }
 
     /**
-     * deleting User in XML file on the this position
-     * @param index the index of User for deleting
+     * deleting Person in XML file on the this position
+     * @param index the index of Person for deleting
      * @return true - if deleting ending successfully
      *        false - if deleting don't ending successfully
      */
     public boolean delete(int index) {
         try {
-            User users[] = parser.parseFromXML(path);
-            if (users != null && index >= 0 && index < users.length) {
+            Person people[] = parser.parseFromXML(path);
+            if (people != null && index >= 0 && index < people.length) {
                 FileWriter fileWriter = new FileWriter(prefix + path, false);
-                fileWriter.write(User.parseToXML(null, XMLBEGIN));
-                if (index < 0 || index >= users.length) {
+                fileWriter.write(Person.parseToXML(null, XMLBEGIN));
+                if (index < 0 || index >= people.length) {
                     return false;
                 }
                 for (int i = 0; i < index; i++) {
-                    fileWriter.append(users[i].parseToXML(XMLNONE));
+                    fileWriter.append(people[i].parseToXML(XMLNONE));
                 }
-                for (int i = index + 1; i < users.length; i++) {
-                    fileWriter.append(users[i].parseToXML(XMLNONE));
+                for (int i = index + 1; i < people.length; i++) {
+                    fileWriter.append(people[i].parseToXML(XMLNONE));
                 }
-                fileWriter.append(User.parseToXML(null, XMLEND));
+                fileWriter.append(Person.parseToXML(null, XMLEND));
                 fileWriter.flush();
                 fileWriter.close();
 
@@ -133,7 +134,7 @@ public class XMLEditor {
                 return true;
             }
             else {
-                if (users == null){
+                if (people == null){
                     File file = new File(path);
                     file.delete();
                 }
@@ -146,23 +147,61 @@ public class XMLEditor {
     }
 
     /**
-     * change User on this index in file with this User
-     * @param user the new User for insert in File
-     * @param index the index in file of Old User
+     * change Person on this index in file with this Person
+     * @param person the new Person for insert in File
+     * @param index the index in file of Old Person
      */
-    public void edit(User user, int index){
+    public void edit(Person person, int index){
         if ( this.delete(index)) {
-            this.add(user, index);
+            this.add(person, index);
         }
     }
 
     /**
-     * getting User from file on this index
-     * @param index the index of User, that was getting
-     * @return the User on this position in File
+     * getting Person from file on this index
+     * @param index the index of Person, that was getting
+     * @return the Person on this position in File
      */
-    public User get(int index){
+    public Person get(int index){
         return parser.parseFromXML(path, index);
+    }
+
+    /**
+     * getting arrayList from XML file
+     * @return arrayList of all Users in XML file
+     */
+    public ArrayList<Person> getList(){
+        ArrayList<Person> list = new ArrayList<Person>();
+        Person person;
+        int index = 0;
+        do {
+            person = parser.parseFromXML(path,index++);
+            if (person != null) {
+                list.add(person);
+            }
+        } while (person != null);
+        return list;
+    }
+
+    /**
+     * find in the XML file user with this name
+     * @param name the name for find
+     * @return the index of founded User
+     *    -1 - if user can't founded in XML file
+     */
+    public int findIndexAsName(String name){
+        Person person;
+        int index = 0;
+        do {
+            person = parser.parseFromXML(path,index);
+            if (person != null){
+                if (person.getName().equals(name)){
+                    return index;
+                }
+            }
+            index++;
+        }while (person != null);
+        return -1;
     }
 
     /**
@@ -185,9 +224,9 @@ public class XMLEditor {
      * @return count of Users into XML File
      */
     public int length(){
-        User[] users = parser.parseFromXML(path);
-        if (users != null){
-            return users.length;
+        Person[] people = parser.parseFromXML(path);
+        if (people != null){
+            return people.length;
         }
         else {
             return 0;
@@ -200,11 +239,11 @@ public class XMLEditor {
      */
     public String toString(){
         StringBuilder s = new StringBuilder();
-        User[] users = parser.parseFromXML(path);
-        if (users != null) {
-            for (User user : parser.parseFromXML(path)) {
-                if (user != null) {
-                    s.append(user.toString());
+        Person[] people = parser.parseFromXML(path);
+        if (people != null) {
+            for (Person person : parser.parseFromXML(path)) {
+                if (person != null) {
+                    s.append(person.toString());
                 }
             }
         }

@@ -3,8 +3,7 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="firstname" type="xs:string"/>
     <xs:element name="lastname" type="xs:string"/>
-    <xs:element name="fathername" type="xs:string"/>
-    <xs:element name="telephonenumber" type="xs:long"/>
+    <xs:element name="telephonenumber" type="xs:string"/>
     <xs:element name="mail" type="xs:string"/>
     <xs:element name="workplace" type="xs:string"/>
     <xs:element name="experience" type="xs:byte"/>
@@ -13,7 +12,6 @@
             <xs:sequence>
                 <xs:element ref="firstname"/>
                 <xs:element ref="lastname"/>
-                <xs:element ref="fathername"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -40,6 +38,7 @@
                 <xs:element ref="contact"/>
                 <xs:element ref="work"/>
             </xs:sequence>
+            <xs:attribute type="xs:string" name="name" use="optional"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="class">

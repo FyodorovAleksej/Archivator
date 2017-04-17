@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import XMLDAO.User;
+import XMLDAO.Person;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -14,11 +14,11 @@ import org.jdom2.input.SAXBuilder;
 public class XMLJDOMParser implements Parserable {
 
     /**
-     * Parse XML file for getting array of users, saving in file
+     * Parse XML file for getting array of people, saving in file
      * @param path the path of xml file for parse
-     * @return the array of users in xml file (path)
+     * @return the array of people in xml file (path)
      */
-    public User[] parseFromXML(String path) {
+    public Person[] parseFromXML(String path) {
         try {
             File inputFile = new File(path);
             if (!inputFile.exists()){
@@ -28,14 +28,14 @@ public class XMLJDOMParser implements Parserable {
             Document document = saxBuilder.build(inputFile);
             Element classElement = document.getRootElement();
             List<Element> userList = classElement.getChildren();
-            User[] users = null;
+            Person[] people = null;
             if (userList.size() > 0){
-                users = new User[userList.size()];
+                people = new Person[userList.size()];
                 for (int i = 0; i < userList.size(); i++){
-                    users[i] = parseFromXML(path, i);
+                    people[i] = parseFromXML(path, i);
                 }
             }
-            return users;
+            return people;
         } catch (Exception e){
           e.printStackTrace();
         }
@@ -48,7 +48,7 @@ public class XMLJDOMParser implements Parserable {
      * @param index the index of getting user
      * @return the user with @param index
      */
-    public User parseFromXML(String path, int index) {
+    public Person parseFromXML(String path, int index) {
         try {
             String firstName = null;
             String lastName = null;
@@ -74,7 +74,7 @@ public class XMLJDOMParser implements Parserable {
 
             firstName = FIO.getChild("firstname").getText();
             lastName = FIO.getChild("lastname").getText();
-            fatherName = FIO.getChild("fathername").getText();
+            //fatherName = FIO.getChild("fathername").getText();
 
             Element contact = user.getChild("contact");
 
@@ -86,7 +86,7 @@ public class XMLJDOMParser implements Parserable {
             workPlace = work.getChild("workplace").getText();
             workExperience = Integer.valueOf(work.getChild("experience").getText());
 
-            return new User(firstName,lastName,fatherName,telephoneNumber,mail,workPlace,workExperience);
+            return new Person(user.getAttribute("name").getValue(),firstName,lastName/*,fatherName*/,telephoneNumber,mail,workPlace,workExperience);
         }catch(JDOMException e){
             e.printStackTrace();
         }catch(IOException ioe){

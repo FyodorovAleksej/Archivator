@@ -21,22 +21,22 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        /*User[] users = User.parseFromXML();
-        if (users != null) {
-            for (User i : users) {
+        /*Person[] people = Person.parseFromXML();
+        if (people != null) {
+            for (Person i : people) {
                 System.out.println(i);
             }
         }
-        User user = new User("Roma","Telyatnik","Aleksandrovich","+375298808076","Telyatnik.loh@gmail.com","BSUIR",1);
+        Person user = new Person("Roma","Telyatnik","Aleksandrovich","+375298808076","Telyatnik.loh@gmail.com","BSUIR",1);
         try {
             FileWriter fileWriter = new FileWriter("input.xml",false);
-            fileWriter.write(User.parseToXML(users,User.XMLBEGIN));
-            fileWriter.write(user.parseToXML(User.XMLEND));
+            fileWriter.write(Person.parseToXML(people,Person.XMLBEGIN));
+            fileWriter.write(user.parseToXML(Person.XMLEND));
             fileWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        user.parseToXML(User.XMLBEGIN);
+        user.parseToXML(Person.XMLBEGIN);
         */
     }
 

@@ -1,6 +1,6 @@
 package XMLDAO.Parsers;
 
-import XMLDAO.User;
+import XMLDAO.Person;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,6 +10,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,12 +21,12 @@ import java.io.File;
 public class XMLDOMParser implements Parserable {
 
     /**
-     * Parse XML file for getting array of users, saving in file
+     * Parse XML file for getting array of people, saving in file
      * @param path the path of xml file for parse
-     * @return the array of users in xml file (path)
+     * @return the array of people in xml file (path)
      */
     @Nullable
-    public User[] parseFromXML(String path) {
+    public Person[] parseFromXML(String path) {
         try {
             File inputFile = new File(path);
             if (!inputFile.exists()){
@@ -38,17 +40,17 @@ public class XMLDOMParser implements Parserable {
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("user");
             System.out.println(nList.getLength());
-            User[] users;
+            Person[] people;
             if (nList.getLength() > 0) {
-                users = new User[nList.getLength()];
+                people = new Person[nList.getLength()];
             }
             else {
-                users = null;
+                people = null;
             }
             for (int temp = 0; temp < nList.getLength(); temp++) {
-                    users[temp] = parseFromXML(path, temp);
+                    people[temp] = parseFromXML(path, temp);
             }
-            return users;
+            return people;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +64,7 @@ public class XMLDOMParser implements Parserable {
      * @return the user with @param index
      */
     @Nullable
-    public User parseFromXML(String path, int index) {
+    public Person parseFromXML(String path, int index) {
         try {
             String firstName = null;
             String lastName = null;
@@ -82,12 +84,13 @@ public class XMLDOMParser implements Parserable {
                 return null;
             }
             Node nNode = nList.item(index);
+            Element user = (Element) nNode;
             NodeList fioList = doc.getElementsByTagName("FIO");
             Node fioNode = fioList.item(index);
             if (fioNode.getNodeType() == Node.ELEMENT_NODE) {
                 firstName = getXMLArgument(fioNode, "firstname");
                 lastName = getXMLArgument(fioNode, "lastname");
-                fatherName = getXMLArgument(fioNode, "fathername");
+               // fatherName = getXMLArgument(fioNode, "fathername");
             }
             NodeList contactList = doc.getElementsByTagName("contact");
             Node contactNode = contactList.item(index);
@@ -101,7 +104,8 @@ public class XMLDOMParser implements Parserable {
                 workPlace = getXMLArgument(workNode, "workplace");
                 workExperience = Integer.valueOf(getXMLArgument(nNode, "experience"));
             }
-            return new User(firstName, lastName, fatherName, telephoneNumber, mail, workPlace, workExperience);
+            System.out.println(nNode.getAttributes().getNamedItem("name").getLocalName());
+            return new Person(((Element) nNode).getAttribute("name"),firstName, lastName/*, fatherName*/, telephoneNumber, mail, workPlace, workExperience);
         }catch (Exception e){
             e.printStackTrace();
             return null;
